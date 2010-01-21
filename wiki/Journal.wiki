@@ -21,7 +21,7 @@ The Journal-object currently implements these methods, which can all be overwrit
   Revoked by the crawler whenever an URL has been downloaded and links extracted from it. Any links found in the source is added through `addUrl()` BEFORE this method is revoked. When a connection error occurs (`urllib2.URLError`) both `source` and `status` is `None`. `urlCrawled()` should not return anything.
 
 *`dumpState() -> String|None`*
-  Revoked by the crawler when an exception occurs during runtime. It should return a pickle (or String-like) object representing the current state of the crawler. This string will be saved into a file, which can be loaded back into the Journal using loadState() to continue where progress ended. When `None` is returned, state is not being saved.
+  Revoked by the crawler when an exception occurs during runtime. It should return a pickle (or String-like) object representing the current state of the crawler. This string will be saved into a file, which can be loaded back into the Journal using `loadState()` to continue where progress ended. When `None` is returned, state is not being saved.
 
 *`loadState(str state)`*
-  Given a string 'state' (returned by dumpState()), this method should re-load progress data back into selv. `loadState()` should not return anything.
+  Given a string `state` (returned by `dumpState()`), this method should re-load progress data back into selv. `loadState()` should not return anything.
