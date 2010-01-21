@@ -1,14 +1,26 @@
 #summary Examples on how to use and customize your crawler
 
 == Basic usage ==
+The crawler in it's least complex form:
 {{{
-# Example coming
+from pywebcrawler import WebCrawler, Journal
+
+journal = Journal()
+journal.addUrl('http://www.start-here.com/')
+journal.addUrl('http://www.also-visit-me.com/')
+crawler = WebCrawler(journal)
+
+try:
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
 }}}
 
-== Custom Journal ==
-If customization is required, modifying the [Journal Journal object] object (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
+== Customizing the Journal ==
+If customization is required, modifying the [Journal Journal object] (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
 
 ==== Only crawl a single domain ====
+When validation on URLs are required, adding the logic to the addUrl()-method would in most cases be preferable. Heres a simple example showing how to subclass the Journal object and modify the addUrl()-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
