@@ -31,6 +31,7 @@ class CustomJournal(Journal):
 
 journal = CustomJournal()
 journal.addUrl('http://www.crawl-me.com/') # Will be crawled
+journal.addUrl('http://crawl-me.com/test') # Will be crawled
 journal.addUrl('http://www.tgdaily.com/')  # Will be ignored
 crawler = WebCrawler(journal)
 
