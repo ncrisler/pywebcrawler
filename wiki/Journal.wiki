@@ -1,6 +1,6 @@
 #summary How to customize your crawler
 
-= What is a Journal? =
+== What is a Journal? ==
 Journal is by default a very simple class, which can be modified quite extensive to produce a complex set of rules for the crawler to follow. It also implements two methods for saving and re-loading progress (eg. useful if program crashes).
 
 == The Journal object ==
