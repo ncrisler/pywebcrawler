@@ -30,9 +30,10 @@ class CustomJournal(Journal):
             Journal.addUrl(self, url, referer)
 
 journal = CustomJournal()
-journal.addUrl('http://www.crawl-me.com/') # Will be crawled
-journal.addUrl('http://crawl-me.com/test') # Will be crawled
-journal.addUrl('http://www.tgdaily.com/')  # Will be ignored
+journal.addUrl('http://www.crawl-me.com/')  # Will be crawled
+journal.addUrl('http://crawl-me.com/test')  # Will be crawled
+journal.addUrl('http://test.crawl-me.com/') # Ignored
+journal.addUrl('http://www.tgdaily.com/')   # Ignored
 crawler = WebCrawler(journal)
 
 try:
