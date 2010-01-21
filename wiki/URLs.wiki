@@ -1,3 +1,10 @@
 #summary A little bit about how URLs are handled
 
-*Description coming*
+== Definition? ==
+Whenever an URL is passed to the Journal from the crawler, a full qualified URL is being given, including all parts!
+
+== How are URLs parsed? ==
+URLs are parsed using the built-in `urlparse` module to ensure safe URL-handling.
+
+== How are relative URLs converted to full qualified URLs? ==
+Coming...
