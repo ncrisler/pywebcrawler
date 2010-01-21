@@ -118,5 +118,5 @@ except KeyboardInterrupt:
     # Stopped by user - just quit
     crawler.stop()
 finally:
-    timer.stop()
+    autosave.stop()
 }}}
