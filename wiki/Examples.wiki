@@ -16,11 +16,9 @@ except KeyboardInterrupt:
     crawler.stop()
 }}}
 
-== Customizing the Journal ==
-If customization is required, modifying the [Journal Journal object] (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
 
-==== Only crawl a single domain ====
-When validation on URLs are required, adding the logic to the `addUrl`-method would in most cases be preferable. Heres a simple example showing how to subclass the Journal object and modify the `addUrl`-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
+== Crawling specific domain(s) ==
+When validation on URLs are required, adding the logic to the `addUrl`-method of the [Journal Journal-object] would in most cases be preferable. Heres a simple example showing how to subclass the Journal object and modify the `addUrl`-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -42,8 +40,8 @@ except KeyboardInterrupt:
     crawler.stop()
 }}}
 
-==== Saving the HTML source ====
-Whenever a page has been downloaded and parsed, the `Journal.urlCrawled`-method is revoked by the crawler, giving the URL, HTML-source and a status code.
+== Saving the HTML source ==
+Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [Journal Journal-object] is revoked by the crawler, giving the URL, HTML-source and a status code.
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
