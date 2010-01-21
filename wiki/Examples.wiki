@@ -24,12 +24,12 @@ When validation on URLs are required, adding the logic to the `addUrl`-method of
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
-class CustomJournal(Journal):
+class MyJournal(Journal):
     def addUrl(self, url, referer):
         if getDomainName(url) == 'crawl-me.com':
             Journal.addUrl(self, url, referer)
 
-journal = CustomJournal()
+journal = MyJournal()
 journal.addUrl('http://www.crawl-me.com/')  # Will be crawled
 journal.addUrl('http://crawl-me.com/test')  # Will be crawled
 journal.addUrl('http://test.crawl-me.com/') # Ignored
@@ -47,7 +47,7 @@ Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
-class CustomJournal(Journal):
+class MyJournal(Journal):
     def urlCrawled(self, url, source, status):
         Journal.urlCrawled(self, url, source, status)
 
@@ -62,7 +62,7 @@ class CustomJournal(Journal):
         filename = '%s.html' % m.hexdigest()
         open(filename, 'w').write(source)
 
-journal = CustomJournal()
+journal = MyJournal()
 journal.addUrl('http://www.crawl-me.com/')
 
 try:
