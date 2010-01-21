@@ -30,10 +30,10 @@ class MyJournal(Journal):
             Journal.addUrl(self, url, referer)
 
 journal = MyJournal()
-journal.addUrl('http://www.crawl-me.com/')  # Will be crawled
-journal.addUrl('http://crawl-me.com/test')  # Will be crawled
-journal.addUrl('http://test.crawl-me.com/') # Ignored
-journal.addUrl('http://www.tgdaily.com/')   # Ignored
+journal.addUrl('http://www.crawl-me.com/') # Will be crawled
+journal.addUrl('http://crawl-me.com/foo')  # Will be crawled
+journal.addUrl('http://bar.crawl-me.com/') # Ignored
+journal.addUrl('http://www.tgdaily.com/')  # Ignored
 
 try:
     crawler = WebCrawler(journal)
@@ -48,6 +48,12 @@ Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
 class MyJournal(Journal):
+    def _save(self, url, source):
+        import md5
+        m = md5.new(url)
+        filename = '%s.html' % m.hexdigest()
+        open(filename, 'w').write(source)
+
     def urlCrawled(self, url, source, status):
         Journal.urlCrawled(self, url, source, status)
 
@@ -55,15 +61,9 @@ class MyJournal(Journal):
         # In that case, we don't have anything to save.
         if not source is None:
             self._save(url, source)
-    
-    def _save(self, url, source):
-        import md5
-        m = md5.new(url)
-        filename = '%s.html' % m.hexdigest()
-        open(filename, 'w').write(source)
 
 journal = MyJournal()
-journal.addUrl('http://www.crawl-me.com/')
+journal.addUrl('http://www.start-here.com/')
 
 try:
     crawler = WebCrawler(journal)
@@ -77,9 +77,8 @@ If an unexpected exception is raised during runtime, much information about craw
 {{{
 from pywebcrawler import WebCrawler, Journal
 
-
 journal = Journal()
-journal.addUrl('http://www.crawl-me.com/')
+journal.addUrl('http://www.start-here.com/')
 
 try:
     crawler = WebCrawler(journal)
@@ -98,7 +97,7 @@ Another way of making sure progress isn't lost, is by continuously saving it to 
 {{{
 from pywebcrawler import WebCrawler, Journal, Timer
 
-class ProgressAutoSave(object):
+class SaveProgress(object):
     def __init__(self, journal):
         self._journal = journal
 
@@ -107,9 +106,9 @@ class ProgressAutoSave(object):
         open('progress.txt', 'w').write(stateStr)
 
 journal = Journal()
-journal.addUrl('http://www.crawl-me.com/')
+journal.addUrl('http://www.start-here.com/')
 
-autosave = ProgressAutoSave(journal)
+autosave = SaveProgress(journal)
 timer = Timer(autosave, 60, 0)
 timer.start()
 
