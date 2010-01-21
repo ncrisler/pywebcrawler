@@ -8,9 +8,9 @@ from pywebcrawler import WebCrawler, Journal
 journal = Journal()
 journal.addUrl('http://www.start-here.com/')
 journal.addUrl('http://www.also-visit-me.com/')
-crawler = WebCrawler(journal)
 
 try:
+    crawler = WebCrawler(journal)
     crawler.start()
 except KeyboardInterrupt:
     crawler.stop()
@@ -34,9 +34,9 @@ journal.addUrl('http://www.crawl-me.com/')  # Will be crawled
 journal.addUrl('http://crawl-me.com/test')  # Will be crawled
 journal.addUrl('http://test.crawl-me.com/') # Ignored
 journal.addUrl('http://www.tgdaily.com/')   # Ignored
-crawler = WebCrawler(journal)
 
 try:
+    crawler = WebCrawler(journal)
     crawler.start()
 except KeyboardInterrupt:
     crawler.stop()
