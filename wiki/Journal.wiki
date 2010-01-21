@@ -1,7 +1,12 @@
 #summary How to customize your crawler
 
-== The Journal ==
-The Journal() object currently implements these methods, which can all be overwritten/replaced when subclassing:
+= What is a Journal? =
+Journal is by default a very simple class, which can be modified quite extensive to produce a complex set of rules for the crawler to follow. It also implements two methods for saving and re-loading progress (eg. useful if program crashes).
+
+When creating a !WebCrawler-object one must pass it a Journal-like object (subclassing not needed, but the same methods must be present). The crawler uses this object to ask for URLs to crawl and callback with pages processed (including url, HTML-source and HTTP-status code).
+
+== The Journal object ==
+The Journal-object currently implements these methods, which can all be overwritten/replaced when subclassing. When not subclassing, one must make sure that all of these methods are present on the object, or exceptions will be raised during runtime.
 
 *`spiders() -> Integer`*
   Should return the max. amount of spiders alive at a time
