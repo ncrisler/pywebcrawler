@@ -1,5 +1,3 @@
-#summary pywebcrawler basics - how the works
+#summary pywebcrawler basics - how the crawler works
 
-= Basics - how it works =
-
-Description coming
+*Description coming*
