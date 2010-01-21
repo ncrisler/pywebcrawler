@@ -26,11 +26,12 @@ from pywebcrawler import WebCrawler, Journal, getDomainName
 
 class CustomJournal(Journal):
     def addUrl(self, url, referer):
-        if getDomainName(url) == 'the-domain-i-want-crawled.com':
+        if getDomainName(url) == 'crawl-me.com':
             Journal.addUrl(self, url, referer)
 
 journal = CustomJournal()
-journal.addUrl('http://www.the-domain-i-want-crawled.com/')
+journal.addUrl('http://www.crawl-me.com/') # Will be crawled
+journal.addUrl('http://www.tgdaily.com/')  # Will be ignored
 crawler = WebCrawler(journal)
 
 try:
