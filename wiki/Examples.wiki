@@ -71,7 +71,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving progress if an error occurs ==
-If an unexpected exception is raised during runtime, much information about progress may be lost. Therefore the [Journal Journal-object] implements two simple methods to overcome this: `dumpState()` and `loadState()`. In the example below the current progress will be save into progress.txt if an unexpected exception occurs. You can pass the content of progress.txt into `loadState()` to continue.
+If an unexpected exception is raised during runtime, much information about progress may be lost. Therefore the [Journal Journal-object] implements two simple methods to overcome this: `dumpState()` and `loadState()`. In the example below the current progress will be save into progress.txt if an unexpected exception occurs. You can pass the content of progress.txt into `loadState()` to continue from where the crawler failed.
 {{{
 from pywebcrawler import WebCrawler, Journal
 
