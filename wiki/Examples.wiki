@@ -1,3 +1,28 @@
 #summary Examples on how to use and customize your crawler
 
-*Description coming*
+== Basic usage ==
+{{{
+# Example coming
+}}}
+
+== Custom Journal ==
+If customization is required, modifying the Journal object (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
+
+==== Only crawl a single domain ====
+{{{
+from pywebcrawler import WebCrawler, Journal, getDomainName
+
+class CustomJournal(Journal):
+    def addUrl(self, url, referer):
+        if getDomainName(url) == 'the-domain-i-want-crawled.com':
+            Journal.addUrl(self, url, referer)
+
+journal = CustomJournal()
+journal.addUrl('http://www.the-domain-i-want-crawled.com/')
+crawler = WebCrawler(journal)
+
+try:
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+}}}
