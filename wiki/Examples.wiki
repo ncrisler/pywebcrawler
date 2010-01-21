@@ -77,7 +77,7 @@ If an unexpected exception is raised during runtime, much information about prog
 {{{
 from pywebcrawler import WebCrawler, Journal
 
-journal = CustomJournal()
+journal = Journal()
 journal.addUrl('http://www.crawl-me.com/')
 
 try:
