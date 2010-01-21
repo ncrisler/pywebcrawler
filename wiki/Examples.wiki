@@ -108,9 +108,8 @@ class SaveProgress(object):
 journal = Journal()
 journal.addUrl('http://www.start-here.com/')
 
-autosave = SaveProgress(journal)
-timer = Timer(autosave, 60, 0)
-timer.start()
+autosave = Timer(SaveProgress(journal), 60, 0)
+autosave.start()
 
 try:
     crawler = WebCrawler(journal)
