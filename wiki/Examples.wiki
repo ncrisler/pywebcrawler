@@ -87,7 +87,9 @@ except KeyboardInterrupt:
     # Stopped by user - just quit
     crawler.stop()
 except:
-    # Unexpected exception occurred - save state
+    # Unexpected exception occurred - save state.
+    # Notice: dumpState() may return None
     stateStr = journal.dumpState()
-    open('progress.txt', 'w').write(stateStr)
+    if not stateStr is None:
+        open('progress.txt', 'w').write(stateStr)
 }}}
