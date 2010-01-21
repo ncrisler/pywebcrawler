@@ -20,7 +20,7 @@ except KeyboardInterrupt:
 If customization is required, modifying the [Journal Journal object] (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
 
 ==== Only crawl a single domain ====
-When validation on URLs are required, adding the logic to the addUrl()-method would in most cases be preferable. Heres a simple example showing how to subclass the Journal object and modify the addUrl()-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
+When validation on URLs are required, adding the logic to the `addUrl`-method would in most cases be preferable. Heres a simple example showing how to subclass the Journal object and modify the `addUrl`-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -34,6 +34,36 @@ journal.addUrl('http://www.crawl-me.com/')  # Will be crawled
 journal.addUrl('http://crawl-me.com/test')  # Will be crawled
 journal.addUrl('http://test.crawl-me.com/') # Ignored
 journal.addUrl('http://www.tgdaily.com/')   # Ignored
+
+try:
+    crawler = WebCrawler(journal)
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+}}}
+
+==== Saving the HTML source ====
+Whenever a page has been downloaded and parsed, the `Journal.urlCrawled`-method is revoked by the crawler, giving the URL, HTML-source and a status code.
+{{{
+from pywebcrawler import WebCrawler, Journal, getDomainName
+
+class CustomJournal(Journal):
+    def urlCrawled(self, url, source, status):
+        Journal.urlCrawled(self, url, source, status)
+
+        # When an urllib2.URLError occurs, both source and status will be None.
+        # In this case, we don't have anything to save.
+        if not source is None:
+            self._save(url, source)
+    
+    def _save(self, url, source):
+        import md5
+        m = md5.new(url)
+        filename = '%s.html' % m.hexdigest()
+        open(filename, 'w').write(source)
+
+journal = CustomJournal()
+journal.addUrl('http://www.crawl-me.com/')
 
 try:
     crawler = WebCrawler(journal)
