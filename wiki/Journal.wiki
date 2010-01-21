@@ -1,3 +1,25 @@
 #summary How to customize your crawler
 
-*Description coming*
+== The Journal ==
+The Journal() object currently implements these methods, which can all be overwritten/replaced when subclassing:
+
+*`spiders() -> Integer`*
+  Should return the max. amount of spiders alive at a time
+
+*`addUrl(url, referer)`*
+  Revoked by the crawler whenever a new URL was found.
+  - 'url' is the link found.
+  - 'referer' is URL of the page where 'url' was found.
+  It is the Journal's job to keep track of URLs that have already been visited, so identical links may be given multiply times. addUrl() should not return anything.
+
+*`getNextUrl() -> String|None`*
+  Revoked by the crawler whenever a new URL is needed. The URL returned will be the next to be downloaded. This method can return None if there aren't any URLs available (eg. when starting with a single URL, there won't be more URLs available before the first page has been downloaded and parsed).
+
+*`urlCrawled(url, source)`*
+  Revoked by the crawler whenever an URL has been downloaded and parsed. Any links found in the source is added through addUrl() BEFORE this method is revoked. urlCrawled() should not return anything.
+
+*`dumpState() -> String|None`*
+  Revoked by the crawler when an exception occurs during runtime. It should return a pickle (or String-like) object representing the current state of the crawler. This string will be saved into a file, which can be loaded back into the Journal using loadState() to continue where progress ended. When None is returned, state is not being saved.
+
+*`loadState(state)`*
+  Given a string 'state' (returned by dumpState()), this method should re-load progress data back into selv. loadState() should not return anything.
