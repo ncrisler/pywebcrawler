@@ -4,7 +4,7 @@
 Journal is by default a very simple class, which can be modified quite extensive to produce a complex set of rules for the crawler to follow. It also implements two methods for saving and re-loading progress (eg. useful if program crashes).
 
 == The Journal object ==
-When creating a `!WebCrawler`-object one must pass it a Journal-like object. The crawler uses this object to ask for URLs to crawl and callback with pages processed (including url, HTML-source and HTTP-status code). Subclassing `Journal()` is not necessary, but the same methods must be present or exceptions will be raised during runtime.
+When creating a `WebCrawler`-object one must pass it a Journal-like object. The crawler uses this object to ask for URLs to crawl and callback with pages processed (including url, HTML-source and HTTP-status code). Subclassing `Journal()` is not necessary, but the same methods must be present or exceptions will be raised during runtime.
 
 *`spiders() -> Integer`*
   Should return the max. amount of spiders alive at a time
