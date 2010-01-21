@@ -43,7 +43,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving the HTML source ==
-Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [Journal Journal-object] is revoked by the crawler, passed the URL, HTML-source and a status code.
+Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [Journal Journal-object] is revoked by the crawler, passing three parameters: the URL, the HTML-source and a HTTP status code.
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -73,7 +73,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving progress if an error occurs ==
-If an unexpected exception is raised during runtime, much information about progress may be lost. Therefore the [Journal Journal-object] implements two simple methods to overcome this: `dumpState()` and `loadState()`. In the example below the current progress will be save into progress.txt if an unexpected exception occurs. You can pass the content of progress.txt into `loadState()` to continue from where the crawler failed.
+If an unexpected exception is raised during runtime, much information about crawling progress may be lost. Therefore the default [Journal Journal-object] implements two simple methods to overcome this: `dumpState()` and `loadState()`. In the example below the current progress will be save into progress.txt if an exception occurs. You can pass the content of progress.txt into `loadState()` to continue from where the crawler failed.
 {{{
 from pywebcrawler import WebCrawler, Journal
 
@@ -94,7 +94,7 @@ except:
 }}}
 
 == Saving progress continuously with a timer ==
-Another way of making sure progress isn't lost, is by continuously saving it to a file by using a timer that repeatly revokes a callable object you pass to it.
+Another way of making sure progress isn't lost, is by continuously saving it to a file (or elsewhere) by using a timer that repeatedly revokes a callable object you pass to it.
 {{{
 from pywebcrawler import WebCrawler, Journal, TimedCallback
 
