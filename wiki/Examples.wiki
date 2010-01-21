@@ -1,5 +1,7 @@
 #summary Examples on how to use and customize your crawler
 
+<wiki:toc max_depth="2" />
+
 == Basic usage ==
 The crawler in it's least complex form:
 {{{
