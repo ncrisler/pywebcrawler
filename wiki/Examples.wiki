@@ -6,7 +6,7 @@
 }}}
 
 == Custom Journal ==
-If customization is required, modifying the Journal object (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
+If customization is required, modifying the [Journal Journal object] object (or creating an object with the same methods) is the way. Here is some basic examples of how the Journal can be re-written to fit your purpose.
 
 ==== Only crawl a single domain ====
 {{{
