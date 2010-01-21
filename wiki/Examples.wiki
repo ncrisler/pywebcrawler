@@ -41,7 +41,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving the HTML source ==
-Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [Journal Journal-object] is revoked by the crawler, giving the URL, HTML-source and a status code.
+Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [Journal Journal-object] is revoked by the crawler, passed the URL, HTML-source and a status code.
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -50,7 +50,7 @@ class CustomJournal(Journal):
         Journal.urlCrawled(self, url, source, status)
 
         # When an urllib2.URLError occurs, both source and status will be None.
-        # In this case, we don't have anything to save.
+        # In that case, we don't have anything to save.
         if not source is None:
             self._save(url, source)
     
