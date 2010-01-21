@@ -96,21 +96,21 @@ except:
 == Saving progress continuously with a timer ==
 Another way of making sure progress isn't lost, is by continuously saving it to a file (or elsewhere) by using a timer that repeatedly revokes a callable object you pass to it.
 {{{
-from pywebcrawler import WebCrawler, Journal, TimedCallback
+from pywebcrawler import WebCrawler, Journal, Timer
 
 class ProgressAutoSave(object):
     def __init__(self, journal):
         self._journal = journal
+
     def __call__(self):
         stateStr = self._journal.dumpState()
         open('progress.txt', 'w').write(stateStr)
-
 
 journal = Journal()
 journal.addUrl('http://www.crawl-me.com/')
 
 autosave = ProgressAutoSave(journal)
-timer = TimedCallback(autosave, 60, 0)
+timer = Timer(autosave, 60, 0)
 timer.start()
 
 try:
