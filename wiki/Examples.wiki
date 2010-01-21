@@ -20,7 +20,7 @@ except KeyboardInterrupt:
 
 
 == Crawling specific domain(s) ==
-When validation on URLs are required, adding the logic to the `addUrl`-method of the [Journal Journal-object] would in most cases be preferable. Heres a simple example showing how to subclass the Journal object and modify the `addUrl`-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
+When validation on URLs are required, adding the logic to the `addUrl`-method of the [Journal Journal-object] would in most cases be preferable. Here's a simple example showing how to subclass the Journal object and modify the `addUrl`-method to fit your purpose. [URLs Click here to read more about how the crawler works with URLs].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -94,7 +94,7 @@ except:
 }}}
 
 == Saving progress continuously with a timer ==
-Another way of making sure progress isn't lost, is by continuously saving it to a file by using a timer that repetitively revokes a callback method you pass to it.
+Another way of making sure progress isn't lost, is by continuously saving it to a file by using a timer that repeatly revokes a callable object you pass to it.
 {{{
 from pywebcrawler import WebCrawler, Journal, TimedCallback
 
