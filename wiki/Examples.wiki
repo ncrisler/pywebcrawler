@@ -8,8 +8,7 @@ In it's least complex form, the crawler will just keep crawling until it can't f
 from pywebcrawler import WebCrawler, Journal
 
 journal = Journal()
-journal.addUrl('http://www.start-here.com/')
-journal.addUrl('http://www.also-visit-me.com/')
+journal.add('http://www.start-here.com/')
 
 try:
     crawler = WebCrawler(journal)
@@ -20,20 +19,20 @@ except KeyboardInterrupt:
 
 
 == Crawling specific domain(s) ==
-When validation on URLs are required, adding the logic to the `addUrl`-method of the [Journal Journal-object] would in most cases be preferable. Here's a simple example showing how to subclass the `Journal`-object and modify the `addUrl`-method to fit your purpose. To read more about how the crawler works with URLs [URLs click here].
+When validation on URLs are required, adding the logic to the `add`-method of the [Journal Journal-object] would in most cases be preferable. Here's a simple example showing how to subclass the `Journal`-object and modify the `add`-method to fit your purpose. To read more about how the crawler works with URLs [URLs click here].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
 class MyJournal(Journal):
-    def addUrl(self, url, referer=None):
+    def add(self, url, referer=None):
         if getDomainName(url) == 'crawl-me.com':
-            Journal.addUrl(self, url, referer)
+            Journal.add(self, url, referer)
 
 journal = MyJournal()
-journal.addUrl('http://www.crawl-me.com/') # Will be crawled
-journal.addUrl('http://crawl-me.com/foo')  # Will be crawled
-journal.addUrl('http://bar.crawl-me.com/') # Ignored
-journal.addUrl('http://www.tgdaily.com/')  # Ignored
+journal.add('http://www.crawl-me.com/') # Will be crawled
+journal.add('http://crawl-me.com/foo')  # Will be crawled
+journal.add('http://bar.crawl-me.com/') # Ignored
+journal.add('http://www.tgdaily.com/')  # Ignored
 
 try:
     crawler = WebCrawler(journal)
@@ -43,7 +42,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving the HTML source ==
-Whenever a page has been downloaded and parsed, the `urlCrawled`-method of the [Journal Journal-object] is revoked by the crawler, passing three parameters: the URL, the HTML-source and a HTTP status code.
+Whenever a page has been downloaded and parsed, the `parse`-method of the [Journal Journal-object] is revoked by the crawler, passing a single parameter: The [HTMLDocResult HTMLDocResult-object].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -54,16 +53,16 @@ class MyJournal(Journal):
         filename = '%s.html' % m.hexdigest()
         open(filename, 'w').write(source)
 
-    def urlCrawled(self, url, source, status):
-        Journal.urlCrawled(self, url, source, status)
+    def parse(self, res):
+        Journal.parse(self, res)
 
-        # When an urllib2.URLError occurs, both source and status will be None.
+        # When an urllib2.URLError occurs, res.status will be None.
         # In that case, we don't have anything to save.
-        if not source is None:
-            self._save(url, source)
+        if not res.status is None:
+            self._save(res.url, res.html)
 
 journal = MyJournal()
-journal.addUrl('http://www.start-here.com/')
+journal.add('http://www.start-here.com/')
 
 try:
     crawler = WebCrawler(journal)
@@ -78,7 +77,7 @@ If an unexpected exception is raised during runtime, much information about craw
 from pywebcrawler import WebCrawler, Journal
 
 journal = Journal()
-journal.addUrl('http://www.start-here.com/')
+journal.add('http://www.start-here.com/')
 
 try:
     crawler = WebCrawler(journal)
@@ -106,7 +105,7 @@ class SaveProgress(object):
         open('progress.txt', 'w').write(stateStr)
 
 journal = Journal()
-journal.addUrl('http://www.start-here.com/')
+journal.add('http://www.start-here.com/')
 
 autosave = Timer(SaveProgress(journal), 60, 0)
 autosave.start()
