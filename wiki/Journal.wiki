@@ -1,5 +1,7 @@
 #summary How to customize your crawler
 
+<wiki:toc max_depth="2" />
+
 = What is a Journal? =
 Journal is by default a very simple class, which can be modified quite extensive to produce a complex set of rules for the crawler to follow. You can either subclass the default `Journal`-class or you can create a new object with the three methods required by the crawler (see below).
 
