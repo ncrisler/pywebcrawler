@@ -45,11 +45,11 @@ Whenever a page has been downloaded and parsed, the `parse`-method of the [Journ
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
 class MyJournal(Journal):
-    def _save(self, url, source):
+    def _save(self, url, html):
         import md5
         m = md5.new(url)
         filename = '%s.html' % m.hexdigest()
-        open(filename, 'w').write(source)
+        open(filename, 'w').write(html)
 
     def parse(self, res):
         Journal.parse(self, res)
