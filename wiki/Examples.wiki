@@ -1,7 +1,5 @@
 #summary Examples on how to use and customize your crawler
-
 <wiki:toc max_depth="2" />
-
 == Basic usage ==
 In it's least complex form, the crawler will just keep crawling until it can't find anymore URLs out there!
 {{{
