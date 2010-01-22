@@ -27,24 +27,3 @@ When the crawler revokes the `Journal.nextUrl()` method, the default `Journal`-o
 When the crawler then revokes the `Journal.parse()` method, the default `Journal`-object will then remove the URL from the list of URLs being crawled right now, and append it to the list of URLs already crawled. By using the `HTMLDocResult.getLinks()` method to extract all links found on the page, `Journal` will save the links using `self.add(url)`.
 
 The default `Journal`-object also implements two methods to save and reload progress info: `Journal.dumpState()` and `Journal.loadState(s)`. `dumpState()` will simply pickle the three above mentioned lists and return the pickled string, while `loadState(s)` will simply unpickle the string given and save the data into `self`.
-
-== The Journal object ==
-When creating a `WebCrawler`-object one must pass it a Journal-like object. The crawler uses this object to ask for URLs to crawl and callback with pages processed (including url, HTML-source and HTTP-status code). Subclassing `Journal()` is not necessary, but the same methods must be present or exceptions will be raised during runtime.
-
-*`spiders() -> Integer`*
-  Revoked every time the crawler is started using `WebCrawler.start()`. Should return the max. amount of spiders alive at a time
-
-*`addUrl(str url, str referer)`*
-  Revoked by the crawler whenever a new URL was found. `url` is the link found. `referer` is URL of the page where `url` was found. It is the Journal's job to keep track of URLs that have already been visited, so identical links may be given multiply times. `addUrl()` should not return anything.
-
-*`getNextUrl() -> String|None`*
-  Revoked by the crawler whenever a new URL is needed. The URL returned will be the next to be downloaded. This method can return `None` if there aren't any URLs available (eg. when starting with a single URL, there won't be more URLs available before the first page has been downloaded and parsed).
-
-*`urlCrawled(str url, str source, int status)`*
-  Revoked by the crawler whenever an URL has been downloaded and links extracted from it. Any links found in the source is added through `addUrl()` BEFORE this method is revoked. When a connection error occurs (`urllib2.URLError`) both `source` and `status` is `None`. `urlCrawled()` should not return anything.
-
-*`dumpState() -> String|None`*
-  Revoked by the crawler when an exception occurs during runtime. It should return a pickle (or String-like) object representing the current state of the crawler. This string will be saved into a file, which can be loaded back into the Journal using `loadState()` to continue where progress ended. When `None` is returned, state is not being saved.
-
-*`loadState(str state)`*
-  Given a string `state` (returned by `dumpState()`), this method should re-load progress data back into selv. `loadState()` should not return anything.
