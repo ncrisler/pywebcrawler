@@ -17,7 +17,7 @@ except KeyboardInterrupt:
 
 
 == Crawling specific domain(s) ==
-When validation on URLs are required, adding the logic to the `add`-method of the [Journal Journal-object] would in most cases be preferable. Here's a simple example showing how to subclass the `Journal`-object and modify the `add`-method to fit your purpose. To read more about how the crawler works with URLs [URLs click here].
+When validation on URLs are required, adding the logic to the `add`-method of the [Journal Journal-object] would in most cases be preferable. Here's a simple example showing how to subclass [Journal#The_default_Journal-object the default `Journal`-object] and modify the `add`-method to fit your purpose. To read more about how the crawler works with URLs [URLs click here].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
