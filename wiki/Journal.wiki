@@ -1,7 +1,29 @@
 #summary How to customize your crawler
 
-== What is a Journal? ==
-Journal is by default a very simple class, which can be modified quite extensive to produce a complex set of rules for the crawler to follow. It also implements two methods for saving and re-loading progress (eg. useful if program crashes).
+= What is a Journal? =
+Journal is by default a very simple class, which can be modified quite extensive to produce a complex set of rules for the crawler to follow. You can either subclass the default `Journal`-class or you can create a new object with the three methods required by the crawler (see below).
+
+== How it works ==
+To create an instance of the `WebCrawler`-class you need to pass it a Journal-like object. The crawler will save this object internally and use it to call back every time a user-made decision or action is required. These decisions are:
+
+ * *How many spiders should live?*
+ When starting the crawler using `WebCrawler.start()` the `spiders`-method of the `Journal`-object is called by the crawler. This method should return the maximum amount of spider-threads alive at a time. All non-integer values will raise an exception.
+
+ * *What URL should I crawl next?*
+ Every time the crawler is ready to crawl a new URL, the `nextUrl`-method of the `Journal`-object is revoked. This method should either return the next URL to crawl, or `None`. Sometimes it's necessary to return `None` (eg. when starting with a single URL, no more URLs will be available before the first page has been downloaded and parsed). The crawler will stop crawling when there is no spiders left alive and `nextUrl()` returns `None`.
+
+ * *Parsing the page*
+ Every time the crawler has finished downloading a page, the `parse`-method of the `Journal`-object is revoked by the crawler. A `HTMLDocResult`-object is given as single parameter.
+
+== The default Journal-object ==
+The default `Journal`-object implements (probably) the easiest way of feeding URLs to the crawler and keeping track of URLs already crawled. It holds three private members for storing URLs:
+
+ * A list of URLs not yet crawled
+ * A list of URLs being crawled right now
+ * A list of URLs already crawled
+
+When a page has been downloaded, the `parse`-method of the `Journal`-object will be revoked by the crawler, passing a single parameter: a `HTMLDocResult`-object, which holds some information about the HTTP response. Calling `HTMLDocResult.getLines()` will return a list of all links found on the page (converted to fully qualified URLs). The Journal must filter these links if required, and keep track of them for later use.
+
 
 == The Journal object ==
 When creating a `WebCrawler`-object one must pass it a Journal-like object. The crawler uses this object to ask for URLs to crawl and callback with pages processed (including url, HTML-source and HTTP-status code). Subclassing `Journal()` is not necessary, but the same methods must be present or exceptions will be raised during runtime.
