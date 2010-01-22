@@ -22,9 +22,9 @@ When validation on URLs are required, adding the logic to the `add`-method of th
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
 class MyJournal(Journal):
-    def add(self, url, referer=None):
+    def add(self, url):
         if getDomainName(url) == 'crawl-me.com':
-            Journal.add(self, url, referer)
+            Journal.add(self, url)
 
 journal = MyJournal()
 journal.add('http://www.crawl-me.com/') # Will be crawled
