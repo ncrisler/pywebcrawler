@@ -27,3 +27,6 @@ When the crawler revokes the `Journal.nextUrl()` method, the default `Journal`-o
 When the crawler then revokes the `Journal.parse()` method, the default `Journal`-object will then remove the URL from the list of URLs being crawled right now, and append it to the list of URLs already crawled. By using the `HTMLDocResult.getLinks()` method to extract all links found on the page, `Journal` will save the links using `self.add(url)`.
 
 The default `Journal`-object also implements two methods to save and reload progress info: `Journal.dumpState()` and `Journal.loadState(s)`. `dumpState()` will simply pickle the three above mentioned lists and return the pickled string, while `loadState(s)` will simply unpickle the string given and save the data into `self`.
+
+== Writing your own Journal from scratch ==
+See [Examples#Writing_your_own_Journal_from_scratch the example here].
