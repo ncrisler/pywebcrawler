@@ -118,5 +118,9 @@ finally:
     autosave.stop()
 }}}
 
+== Subclassing the default Journal class ==
+Coming...
+
+
 == Writing your own Journal from scratch ==
 Coming...
