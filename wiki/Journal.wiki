@@ -30,5 +30,7 @@ When the crawler then revokes the `Journal.parse()` method, the default `Journal
 
 The default `Journal`-object also implements two methods to save and reload progress info: `Journal.dumpState()` and `Journal.loadState(s)`. `dumpState()` will simply pickle the three above mentioned lists and return the pickled string, while `loadState(s)` will simply unpickle the string given and save the data into `self`.
 
+See a couple of [Examples the examples] for a demo on subclassing the default `Journal`-object.
+
 = Writing your own Journal from scratch =
 See [Examples#Writing_your_own_Journal_from_scratch the example here].
