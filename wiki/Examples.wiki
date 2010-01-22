@@ -119,3 +119,6 @@ except KeyboardInterrupt:
 finally:
     autosave.stop()
 }}}
+
+== Writing your own Journal from scratch ==
+Coming...
