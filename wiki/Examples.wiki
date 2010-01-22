@@ -116,8 +116,6 @@ try:
 except KeyboardInterrupt:
     # Stopped by user - just quit
     crawler.stop()
-finally:
-    autosave.stop()
 }}}
 
 == Writing a journal from scratch ==
