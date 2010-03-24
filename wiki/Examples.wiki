@@ -44,7 +44,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving the HTML source ==
-Whenever a page has been downloaded and parsed, the `parse`-method of the [Journal Journal-object] is revoked by the crawler, passing two parameter: a [Request Request] and the [Response Response]-object. Note that the default `Journal`-object uses `parse()` to retrieve links and add them to queue if `may_enter()` returns `True`.
+Whenever a page has been downloaded and parsed, the `parse`-method of the [Journal Journal-object] is revoked by the crawler, passing two parameter: a [Request Request] and the [Response Response]-object. Note that the default `Journal`-object uses `parse()` to retrieve links and add them to queue if `may_enter()` returns `True`, so don't forget to revoke this method (unless you intend to do it yourself).
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -85,8 +85,7 @@ except KeyboardInterrupt:
     crawler.stop()
 except:
     # Unexpected exception occurred - save state.
-    stateStr = journal.dumpState()
-    open('progress.txt', 'w').write(stateStr)
+    journal.saveProgress(open('progress.txt', 'w'))
 }}}
 
 == Saving progress continuously with a timer ==
@@ -99,13 +98,13 @@ class SaveProgress(object):
         self._journal = journal
 
     def __call__(self):
-        stateStr = self._journal.dumpState()
-        open('progress.txt', 'w').write(stateStr)
+        self._journal.saveProgress(open('progress.txt', 'w'))
 
 journal = Journal()
 journal.add('http://www.start-here.com/')
 
-autosave = Timer(SaveProgress(journal), 60, 0)
+save_progress = SaveProgress(journal)
+autosave = Timer(save_progress, 60, 0)
 autosave.start()
 
 try:
@@ -114,6 +113,9 @@ try:
 except KeyboardInterrupt:
     # Stopped by user - just quit
     crawler.stop()
+except:
+    # Unexpected exception occurred - save state.
+    save_progress()
 }}}
 
 == Writing a journal from scratch ==
