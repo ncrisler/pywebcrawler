@@ -17,16 +17,18 @@ except KeyboardInterrupt:
 
 
 == Crawling specific domain(s) ==
-When validation on URLs are required, adding the logic to the `add`-method of the [Journal Journal-object] would in most cases be preferable. Here's a simple example showing how to subclass the default `Journal`-object and modify the `add`-method to fit your purpose.
+Validating URLs is easy; just subclass the default `Journal`-object and overwrite the `may_enter`-method. By returning any `True` the URL will be accepted will accepted.
 
 Also read about the [Journal#The_default_Journal-object default Journal-object] and [URLs how the crawler works with URLs].
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
 class MyJournal(Journal):
-    def add(self, url):
+    def may_enter(self, url):
         if getDomainName(url) == 'crawl-me.com':
-            Journal.add(self, url)
+            return True
+        else:
+            return False
 
 journal = MyJournal()
 journal.add('http://www.crawl-me.com/') # Will be crawled
@@ -42,7 +44,7 @@ except KeyboardInterrupt:
 }}}
 
 == Saving the HTML source ==
-Whenever a page has been downloaded and parsed, the `parse`-method of the [Journal Journal-object] is revoked by the crawler, passing a single parameter: The [HTMLDocResult HTMLDocResult-object].
+Whenever a page has been downloaded and parsed, the `parse`-method of the [Journal Journal-object] is revoked by the crawler, passing two parameter: a [Request Request] and the [Response Response]-object. Note that the default `Journal`-object uses `parse()` to retrieve links and add them to queue if `may_enter()` returns `True`.
 {{{
 from pywebcrawler import WebCrawler, Journal, getDomainName
 
@@ -53,13 +55,9 @@ class MyJournal(Journal):
         filename = '%s.html' % m.hexdigest()
         open(filename, 'w').write(html)
 
-    def parse(self, res):
-        Journal.parse(self, res)
-
-        # When an urllib2.URLError occurs, res.status will be None.
-        # In that case, we don't have anything to save.
-        if not res.status is None:
-            self._save(res.url, res.html)
+    def parse(self, request, response):
+        self._save(request.url, response.html)
+        Journal.parse(self, request, response)
 
 journal = MyJournal()
 journal.add('http://www.start-here.com/')
