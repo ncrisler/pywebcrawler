@@ -81,10 +81,9 @@ try:
     crawler = WebCrawler(journal)
     crawler.start()
 except KeyboardInterrupt:
-    # Stopped by user - just quit
     crawler.stop()
 except:
-    # Unexpected exception occurred - save state.
+    # Unexpected exception occurred - save progress
     journal.saveProgress(open('progress.txt', 'w'))
 }}}
 
@@ -111,10 +110,9 @@ try:
     crawler = WebCrawler(journal)
     crawler.start()
 except KeyboardInterrupt:
-    # Stopped by user - just quit
     crawler.stop()
 except:
-    # Unexpected exception occurred - save state.
+    # Unexpected exception occurred - save progress
     save_progress()
 }}}
 
