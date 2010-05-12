@@ -1,4 +1,0 @@
-#summary A little bit about how URLs are handled
-
-= URLs =
-pywebcrawler is using the *lxml* module fetch links from HTML pages. lxml uses the URL in which a link was found as base URL, and pays attention to `<base href>` tags when converting relative to absolute URLs.
