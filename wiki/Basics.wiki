@@ -36,6 +36,20 @@ Public methods of the Request object:
 = Response objects =
 What is a Response object?
 
+== Members ==
+Public members of the Request object:
+
+*`url`*
+  The requested URL
+*`html`*
+  Response HTML. Is `None` when the page could not load (socket error)
+*`headers`*
+  HTTP headers returned by the server
+*`msg`*
+  HTTP message returned by the server
+*`code`*
+  HTTP status code returned by the server
+
 == Methods ==
 Public methods of the Response object:
 
@@ -46,10 +60,10 @@ Public methods of the Response object:
 *`getTitle()`*
   Returns contents of the first occurrence of a `<TITLE>` tag, or `None` if no title-tag was found on the page.
 *`getMeta()`*
-  Returns a list of dictionaries, where each represents the attributes of a `<META>` tag found on the page
+  Iterate over dictionaries, where each represents the attributes of a `<META>` tag found on the page.
 *`getLinks()`*
   Iterate over links found on the page. Yields `(target, tag, attributes)`. 
-  Example: {{{('http://some-url.com/some-link.html', 'a', {'target':'_blank'})}}}
+  Example: {{{('http://some-url.com/some-link.html', 'a', {'target':'_blank'})}}}.
 
 <br>
 = URLs =
