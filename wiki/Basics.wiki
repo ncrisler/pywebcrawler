@@ -1,4 +1,4 @@
-#summary How the crawler works behind the scenes
+#summary A basic introduction to pywebcrawler
 
 <wiki:toc max_depth="1" />
 
