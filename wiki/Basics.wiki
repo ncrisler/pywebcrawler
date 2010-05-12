@@ -15,11 +15,11 @@ What is a Request object?
 == Members ==
 Public members of the Request object:
 
-*`url`*
+*`str url`*
   URL to request, excluding query string.
-*`method`*
+*`str method`*
   HTTP request method
-*`args`*
+*`dict args`*
   HTTP query as dictionary
 
 == Methods ==
@@ -39,15 +39,15 @@ What is a Response object?
 == Members ==
 Public members of the Request object:
 
-*`url`*
+*`str url`*
   The requested URL
-*`html`*
+*`str html`*
   Response HTML. Is `None` when the page could not load (socket error)
-*`headers`*
+*`dict headers`*
   HTTP headers returned by the server
-*`msg`*
+*`str msg`*
   HTTP message returned by the server
-*`code`*
+*`int code`*
   HTTP status code returned by the server
 
 == Methods ==
