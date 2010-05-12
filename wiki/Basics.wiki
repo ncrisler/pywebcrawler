@@ -62,7 +62,7 @@ Public methods of the Response object:
 *`getMeta()`*
   Iterate over dictionaries, where each represents the attributes of a `<META>` tag found on the page.
 *`getLinks()`*
-  Iterate over links found on the page. Yields `(target, tag, attributes)`. 
+  Iterate over links found on the page. Yields `(target, tag, attributes)`.<br>
   Example: {{{('http://some-url.com/some-link.html', 'a', {'target':'_blank'})}}}.
 
 <br>
