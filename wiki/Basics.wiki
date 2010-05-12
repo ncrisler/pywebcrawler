@@ -1,3 +1,49 @@
 #summary How the crawler works behind the scenes
 
-*Description coming* 
+<wiki:toc max_depth="1" />
+
+= Journal = 
+What is a Journal?
+
+== Examples of customized Journals ==
+Examples...
+
+<br>
+= Request objects =
+What is a Request object?
+
+== Members ==
+Public members of the Request object:
+
+*`url`*
+  URL to request, excluding query string.
+*`method`*
+  HTTP request method
+*`args`*
+  HTTP query as dictionary
+
+== Methods ==
+Public methods of the Request object:
+
+*`__init__(url, method='GET', args={})`*
+  Initialize the Request object
+*`addHeader(name, value)`*
+  Add a header to the HTTP request.
+*`addCookie(name, value, **attrs)`*
+  Add a cookie to the HTTP request.
+
+<br>
+= Response objects =
+What is a Response object?
+
+== Methods ==
+Public methods of the Response object:
+=== getCookies() ===
+=== getCookie(name, default=None) ===
+=== getTitle() ===
+=== getMeta() ===
+=== getLinks() ===
+
+<br>
+= URLs =
+pywebcrawler is using the *lxml* module fetch links from HTML pages. lxml uses the URL in which a link was found as base URL, and pays attention to `<base href>` tags when converting relative to absolute URLs.
