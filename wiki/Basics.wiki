@@ -38,11 +38,18 @@ What is a Response object?
 
 == Methods ==
 Public methods of the Response object:
-=== getCookies() ===
-=== getCookie(name, default=None) ===
-=== getTitle() ===
-=== getMeta() ===
-=== getLinks() ===
+
+*`getCookies()`*
+  Returns a list of cookies set by the server
+*`getCookie(name, default=None)`*
+  Returns the value of a cookie set by the server. Returns `default` when cookie name doesn't exist.
+*`getTitle()`*
+  Returns contents of the first occurrence of a `<TITLE>` tag, or `None` if no title-tag was found on the page.
+*`getMeta()`*
+  Returns a list of dictionaries, where each represents the attributes of a `<META>` tag found on the page
+*`getLinks()`*
+  Iterate over links found on the page. Yields `(target, tag, attributes)`. 
+  Example: {{{('http://some-url.com/some-link.html', 'a', {'target':'_blank'})}}}
 
 <br>
 = URLs =
