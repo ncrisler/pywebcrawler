@@ -1,0 +1,119 @@
+
+## Basic usage ##
+In it's least complex form, the crawler will just keep crawling until it can't find anymore URLs out there!
+```
+from pywebcrawler import WebCrawler, Journal
+
+journal = Journal()
+journal.add('http://www.start-here.com/')
+
+try:
+    crawler = WebCrawler(journal)
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+```
+
+
+## Crawling specific domain(s) ##
+Validating URLs is easy; just subclass the default `Journal`-object and overwrite the `may_enter`-method. By returning any `True` the URL will be accepted will accepted.
+
+Also read about the [default Journal-object](Journal#The_default_Journal-object.md) and [how the crawler works with URLs](URLs.md).
+```
+from pywebcrawler import WebCrawler, Journal, getDomainName
+
+class MyJournal(Journal):
+    def may_enter(self, url):
+        if getDomainName(url) == 'crawl-me.com':
+            return True
+        else:
+            return False
+
+journal = MyJournal()
+journal.add('http://www.crawl-me.com/') # Will be crawled
+journal.add('http://crawl-me.com/foo')  # Will be crawled
+journal.add('http://bar.crawl-me.com/') # Ignored
+journal.add('http://www.tgdaily.com/')  # Ignored
+
+try:
+    crawler = WebCrawler(journal)
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+```
+
+## Saving the HTML source ##
+Whenever a page has been downloaded and parsed, the `parse`-method of the [Journal-object](Journal.md) is revoked by the crawler, passing two parameter: a [Request](Request.md) and the [Response](Response.md)-object. Note that the default `Journal`-object uses `parse()` to retrieve links and add them to queue if `may_enter()` returns `True`, so don't forget to revoke this method (unless you intend to do it yourself).
+```
+from pywebcrawler import WebCrawler, Journal, getDomainName
+
+class MyJournal(Journal):
+    def _save(self, url, html):
+        import md5
+        m = md5.new(url)
+        filename = '%s.html' % m.hexdigest()
+        open(filename, 'w').write(html)
+
+    def parse(self, request, response):
+        self._save(request.url, response.html)
+        Journal.parse(self, request, response)
+
+journal = MyJournal()
+journal.add('http://www.start-here.com/')
+
+try:
+    crawler = WebCrawler(journal)
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+```
+
+## Saving progress if an error occurs ##
+If an unexpected exception is raised during runtime, much information about crawling progress may be lost. Therefore the default [Journal-object](Journal.md) implements two simple methods to overcome this: `dumpState()` and `loadState()`. In the example below the current progress will be save into progress.txt if an exception occurs. You can pass the content of progress.txt into `loadState()` to continue from where the crawler failed.
+```
+from pywebcrawler import WebCrawler, Journal
+
+journal = Journal()
+journal.add('http://www.start-here.com/')
+
+try:
+    crawler = WebCrawler(journal)
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+except:
+    # Unexpected exception occurred - save progress
+    journal.saveProgress(open('progress.txt', 'w'))
+```
+
+## Saving progress continuously with a timer ##
+Another way of making sure progress isn't lost, is by continuously saving it to a file (or elsewhere) by using a timer that repeatedly revokes a callable object you pass to it.
+```
+from pywebcrawler import WebCrawler, Journal, Timer
+
+class SaveProgress(object):
+    def __init__(self, journal):
+        self._journal = journal
+
+    def __call__(self):
+        self._journal.saveProgress(open('progress.txt', 'w'))
+
+journal = Journal()
+journal.add('http://www.start-here.com/')
+
+save_progress = SaveProgress(journal)
+autosave = Timer(save_progress, 60, 0)
+autosave.start()
+
+try:
+    crawler = WebCrawler(journal)
+    crawler.start()
+except KeyboardInterrupt:
+    crawler.stop()
+except:
+    # Unexpected exception occurred - save progress
+    save_progress()
+```
+
+## Writing a journal from scratch ##
+Coming...
